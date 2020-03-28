@@ -5,9 +5,9 @@
 ```
 # 以操作日志搜索进行说明
 ## 打开操作日志的列表界面
-![高级搜索按钮](https://github.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/adSearhBtn.png)
+![高级搜索按钮](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/adSearhBtn.png)
 ## 点击上图中的高级搜索按钮
-![高级搜索主界面](https://github.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/mainUI.png)  
+![高级搜索主界面](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/mainUI.png)  
     说明：efadmin-ui中引入了模态框移动的功能，因此，可以拖住高级搜索的标题栏可以进行移动。
 
 ### 条件类型说明
@@ -33,19 +33,19 @@ height和weight在第二个括号内，即都属于另外一个组。
 ```
 
 ### 选择查询字段
-![选择要查询的字段](https://github.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/selectField.png)  
+![选择要查询的字段](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/selectField.png)  
 有哪些字段可以进行查询，是通过代码配置的，后面会讲到。  
 目前支持的后端数据类型有：String、Date、所有数字型、所有浮点型、数字型表示的布尔型，bit型表示的布尔型目前支持的不是很好。
 
 ### 选择字段的查询方式，
-![字段的查询方法](https://github.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/queryMethod.png)  
+![字段的查询方法](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/queryMethod.png)  
 目前总共有13种查询方式，分别是：  
 全模糊，左模糊，右模糊、等于，不等于、区间范围查询、大于，小于，大于等于，小于等于、空值，非空值、包含查询。  
 其中包含查询，例如查询姓名是王伟和李超的记录，值用逗号分隔；
 >后续会考虑根据值的类型屏蔽不支持的查询方法。
 
 ### 输入查询对应的值
-![查询条件的值](https://github.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/fieldValue.png)  
+![查询条件的值](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/fieldValue.png)  
     说明：
  >1. 空值和非空值查询此字段不需要填写；范围查询时，需要输入开始值和结束值。
  >2. 值的格式应是数据库里格式或者json的格式，否则会错误；
@@ -53,7 +53,7 @@ height和weight在第二个括号内，即都属于另外一个组。
 
 
 ### 条件区
-![条件区](https://github.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/fieldArea.png)  
+![条件区](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/fieldArea.png)  
 选择好条件后单击【加入条件区】按钮，条件就会进入条件区，在条件区里目前可以删除已有条件，但是不支持直接修改。  
 如果是单条件查询，此处只允许有一个条件！
 
@@ -62,12 +62,12 @@ height和weight在第二个括号内，即都属于另外一个组。
 此高级查询支持分页功能，查询后可以在列表区翻页请求下一页数据。
 
 ### 对于多条件查询时
-![多条件](https://github.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/mutiField.png)  
+![多条件](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/mutiField.png)  
 参数顺序：是指当多个条件时的优先顺序，值越小越靠前，默认为0；  
 满足状况: 是指当前条件是必须要满足还是可满足也可不满足。
 
 ### 对于分组查询时
-![分组查询](https://github.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/groupField.png)  
+![分组查询](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/groupField.png)  
 所属分组：是指当前条件属于哪个括号组，是默认组还是其他组；
 组关系：是指当前分组的逻辑关系是必须要满足还是可满足也可不满足。
 >目前仅支持两个括号组，太多组用户来数用点复杂了！

@@ -100,8 +100,8 @@ public enum SearchTypeEnum {
 
 ```
 以下为测试图片：
-![image](https://raw.githubusercontent.com/vip-efactory/ejpa-example/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/1-ISNULL-Query.png)
-![image](https://github.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/1-NOTNULL-Query.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/1-ISNULL-Query.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/1-NOTNULL-Query.png)
 
 ## 2.模糊查询，左模糊，右模糊
 ```
@@ -147,11 +147,11 @@ public enum SearchTypeEnum {
 ```
 以下为测试图片：
 全模糊查询：
-![image](https://github.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/2-Fuzzy-Query.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/2-Fuzzy-Query.png)
 左模糊查询：
-![image](https://github.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/2-LeftFuzzy-Query.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/2-LeftFuzzy-Query.png)
 右模糊查询：
-![image](https://github.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/2-RightFuzzy-Query.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/2-RightFuzzy-Query.png)
 
 ## 3.等于查询、不等于查询
 ```
@@ -182,9 +182,9 @@ public enum SearchTypeEnum {
 ```
 以下为测试图片：
 = 查询：
-![image](https://github.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/3-EqualQuery.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/3-EqualQuery.png)
 != 查询
-![image](https://github.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/3-NotEqualQuery.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/3-NotEqualQuery.png)
 
 ## 4.区间范围查询
 ```
@@ -201,7 +201,7 @@ public enum SearchTypeEnum {
 终端打印的SQL条件：where student0_.age between 32 and 36 
 ```
 测试图片：
-![image](https://github.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/4-BetweenQuery.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/4-BetweenQuery.png)
 
 ## 5.小于、小于等于、大于、大于等于
 ```
@@ -255,13 +255,13 @@ public enum SearchTypeEnum {
 ```
 测试图片：
 小于条件：
-![image](https://github.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/5-LT-Query.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/5-LT-Query.png)
 小于等于条件：
-![image](https://github.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/5-LE-Query.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/5-LE-Query.png)
 大于条件：
-![image](https://github.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/5-GT-Query.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/5-GT-Query.png)
 大于等于条件：
-![image](https://github.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/5-GE-Query.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/5-GE-Query.png)
 
 # 多条件搜索案例：
 ## 多条件不包含括号组
