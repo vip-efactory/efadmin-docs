@@ -91,8 +91,11 @@ module.exports = {
                     children: [
                         // '/ejpa/',
                         '/ejpa/crud',
-                        '/ejpa/adsearch',
-                        '/ejpa/i18n'
+                        '/ejpa/propertychk',
+                        '/ejpa/i18n',
+                        '/ejpa/adsearchQD',
+                        '/ejpa/adsearchTest',
+                        '/ejpa/adsearchYL',
                     ]
                 },
                 {
