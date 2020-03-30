@@ -6,12 +6,12 @@
 
 <script>
 import ParentLayout from '@parent-theme/layouts/Layout.vue'
-import CodeFund from '../components/CodeFund.vue'
+// import CodeFund from '../components/CodeFund.vue'
 
 export default {
   components: {
-    ParentLayout,
-    CodeFund
+    ParentLayout
+    // CodeFund
   }
 }
 </script>
