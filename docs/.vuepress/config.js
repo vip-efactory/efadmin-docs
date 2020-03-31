@@ -15,16 +15,17 @@ module.exports = {
     // 头部
     head: [
         ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }],
-        ['link', { rel: 'icon', href: '/logo/small.png' }]
-      //   ['script', {}, `
-      //   var _hmt = _hmt || [];
-      //   (function() {
-      //       var hm = document.createElement("script");
-      //       hm.src = "https://hm.baidu.com/hm.js?9dcf4bca9cc47caeef4caf5d5f982e86";
-      //       var s = document.getElementsByTagName("script")[0];
-      //       s.parentNode.insertBefore(hm, s);
-      //   })();
-      // `]
+        ['link', { rel: 'icon', href: '/logo/small.png' }],
+        // 访问统计
+        ['script', {}, `
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src =  "https://hm.baidu.com/hm.js?d4a6b3d1d9a221923e86ec9302f6d995";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+      `]
     ],
     // 网站标题及描述
     title: 'EF-ADMIN',
@@ -70,7 +71,9 @@ module.exports = {
                         '/guide/ksks',
                         '/guide/hdsc',
                         '/guide/qdsc',
-                        '/guide/xmbs'
+                        '/guide/xmbs',
+                        '/guide/userAudit',
+
                     ]
                 },
                 {
