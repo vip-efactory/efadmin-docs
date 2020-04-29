@@ -22,5 +22,7 @@ features:
   details: 基于ejpa的高级搜索引擎，多字段灵活查询。
 - title: 国际化
   details: 依赖开源的common-i18n组件实现后端额国际化
+- title: 多租户
+  details: 不同租户基于不同的数据库及redis缓存数据库,数据完全隔离。
 footer: Apache License 2.0 | Copyright ©2019-present vip-efactory
 ---

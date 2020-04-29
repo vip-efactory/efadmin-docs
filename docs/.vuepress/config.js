@@ -42,7 +42,7 @@ module.exports = {
             { text: '指南', link: '/guide/'},
             { text: 'EJPA', link: '/ejpa/'},
             { text: '捐赠', link: '/donation/'},
-            { text: 'v2.0', link: '/version/V2.0/'},
+            { text: 'v2.x', link: '/version/V2.x/'},
             { text: '体验', link: 'http://efadmin.ddbin.com'},
             // { text: '博客', link: 'https://www.ydyno.com/'},
             // 下拉列表
@@ -114,7 +114,7 @@ module.exports = {
 
             ],
             '/version/': [
-                'V2.0',
+                'V2.x',
             ]
         },
         // 假如你的文档仓库和项目本身不在一个仓库：
