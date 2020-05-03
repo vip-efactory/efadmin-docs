@@ -29,7 +29,7 @@ module.exports = {
     ],
     // 网站标题及描述
     title: 'EF-ADMIN',
-    description: '一个简单且易上手的 Spring boot 后台管理框架',
+    description: '一个简单且易上手的Spring boot后台管理框架,支持CRUD，高级搜索，国际化，多租户等功能...',
     // 主题配置
     themeConfig: {
         // 提取markdown中h2 和 h3 标题，显示在侧边栏上。
@@ -73,6 +73,8 @@ module.exports = {
                         '/guide/qdsc',
                         '/guide/xmbs',
                         '/guide/userAudit',
+                        '/guide/dzh',
+                        '/guide/dzhfx'
 
                     ]
                 },
