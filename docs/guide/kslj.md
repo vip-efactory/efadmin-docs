@@ -1,7 +1,7 @@
 # 快速了解
 ## 项目简介
 EF-ADMIN 是基于EL-ADMIN项目2.4版本的，后续会逐渐差异化,采用的技术有 Spring
-Boot 2.2.2 、 ejpa、 Spring Security、redis、Vue
+Boot 2.2.6 、 ejpa、 Spring Security、redis、Vue
 的前后端分离的后台管理系统，项目采用分模块开发方式， 权限控制采用
 RBAC，支持数据字典与数据权限管理，支持一键生成前后端代码，支持前端菜单动态路由
 

@@ -9,6 +9,4 @@ request）需要符合一些规范
 - 前端默认（tab）缩进为`2`个空格，后端默认（tab）缩进为`4`个空格
 - 前端应尽量避免 `eslint` 报错
 
-<!--请 pull request 到 v2.5 分支。master 为主分支不允许 pr-->
-
  [手把手教你贡献代码](https://www.cnblogs.com/wenber/p/3630921.html)
