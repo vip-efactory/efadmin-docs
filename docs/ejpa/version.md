@@ -1,5 +1,27 @@
 # ejpa发布历史
 
+# V4.0.0 升级内容:2020-0908
+- 1.剥离了通用部分到common-base组件中，以便MybatisPlus可以使用，注意：有的类的包名已经变化
+- 2.优化了多字段模糊查询的实现;
+- 3.使用类似观察者模式来维持多组件关联的缓存一致性;
+- 4.支持java8的日期时间类型;
+- 5.其他的一些注释优化。  
+PS:  同时发布了embp的1.0.0版本。 https://github.com/vip-efactory/embp
+
+# V3.7.0 升级内容:2020-0612
+- 更新相关的依赖：  
+   SpringBoot 2.2.6===>2.3.0 ;
+   Lombok 1.18.10===>1.18.12
+- 因为升级SpringBoot而引入javax.validation:validation-api的依赖;
+- 优化服务层的实现的属性范围，方便子类继承使用: 
+   ```java
+   protected EntityManager em;
+   protected JPAQueryFactory queryFactory;
+   protected Class<T> clazz = null;
+   ```
+# V3.6.0 升级内容:2020-0526
+- ejpa增加QueryDSL的依赖
+
 # V3.5.1 升级内容:2020-0423
 - 放弃spring拦截器的模式来获取租户信息，测试发现有些请求拦截不到；
   使用的原生的过滤器模式拦截租户信息。
