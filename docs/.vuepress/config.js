@@ -41,6 +41,7 @@ module.exports = {
         nav: [
             { text: '指南', link: '/guide/'},
             { text: 'EJPA', link: '/ejpa/'},
+            { text: 'EMBP', link: '/embp/'},
             { text: '捐赠', link: '/donation/'},
             { text: 'v2.x', link: '/version/V2.x/'},
             { text: '体验', link: 'http://efadmin.ddbin.com'},
@@ -101,6 +102,7 @@ module.exports = {
                         '/ejpa/adsearchQD',
                         '/ejpa/adsearchTest',
                         '/ejpa/adsearchYL',
+                        '/ejpa/cacheCoherency',
                     ]
                 },
                 {
@@ -108,6 +110,15 @@ module.exports = {
                     collapsable: false,
                     children: [
                         '/ejpa/version'
+                    ]
+                }
+            ],
+            '/embp/': [
+                {
+                    title: 'embp版本历史',
+                    collapsable: false,
+                    children: [
+                        '/embp/version'
                     ]
                 }
             ],

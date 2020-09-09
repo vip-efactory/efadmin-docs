@@ -166,7 +166,7 @@ public enum SearchTypeEnum {
         this.value = value;
         this.desc = desc;
     }
-    ... 省略其他代码
+    ... 省略其他代码...
 }
 ```
 ## 封装相邻逻辑关系的枚举
@@ -244,10 +244,9 @@ public abstract class BaseEntity<ID> extends BaseSearchEntity implements Seriali
      */
     @Column(updatable = false, columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate //使用注解实现时间的创建
     @ApiModelProperty(hidden = true)
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * Description:最后更新日期,数据底层实现时间的更新
@@ -255,10 +254,9 @@ public abstract class BaseEntity<ID> extends BaseSearchEntity implements Seriali
     @Column(columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NULL COMMENT '更新时间'")
     //使用注解实现时间的更新
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate //使用注解实现更新时间的更新
     @ApiModelProperty(hidden = true)
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
 
     /**
@@ -478,148 +476,257 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
 ```
 处理单个组内具体条件的生成，下面代码有点多，如果看一遍吃力，可以多看几遍。
 ```java
- /**
-     * 处理单个组内的条件生成
-     */
-    private Predicate genPredicate4SingleGroup(List<BaseSearchField> fields, Root<T> root, CriteriaBuilder cb, T entity) {
-        Predicate finalPredicat = null;
-        int count = fields.size();
-        Predicate fieldP = null;
-        for (int i = 0; i < count; i++) {
-            BaseSearchField field = fields.get(i);
-            // 得到条件的搜索类型，若为空默认模糊搜索
-            int searchType = field.getSearchType() == null ? 0 : field.getSearchType();
-            String key = field.getName();
-            String startVal = field.getVal();      // 开始值
-            String endVal = field.getVal2();    // 结束值
-            // 处理查询值的类型转换
-            String fieldType = getPropType(key, entity); //直接通过当前实体或者父类来获取属性的类型
-            switch (searchType) {                   // cb支持更多的方法,此处仅使用常用的!
-                case 1:     //  EQ(1, "等于查询"),
-                    if (numberTypeList.contains(fieldType)) {
-                        fieldP = cb.equal(root.get(key), convertType4PropertyValue(fieldType, startVal));
-                    } else if (fieldType.equalsIgnoreCase("Date")) {
-                        fieldP = cb.equal(root.<Date>get(key), DateTimeUtil.getDateFromString(startVal));
-                    } else {
-                        fieldP = cb.equal(root.get(key).as(String.class), startVal);
-                    }
-                    break;
-                case 2:     //  RANGE(2, "范围查询"),  如果结束值大于开始值，则交换位置避免查不到数据
-                    if (numberTypeList.contains(fieldType)) {
-                        fieldP = getPredicate4NumberBetweenConditiong(root, cb, key, fieldType, startVal, endVal);
-                    } else if (fieldType.equalsIgnoreCase("Date")) {
-                        Date start = DateTimeUtil.getDateFromString(startVal);
-                        Date end = DateTimeUtil.getDateFromString(endVal);
-                        fieldP = end.compareTo(start) > 0 ? cb.between(root.<Date>get(key), start, end) : cb.between(root.<Date>get(key), end, start);
-                    } else {
-                        fieldP = cb.between(root.get(key).as(String.class), startVal, endVal);
-                    }
-                    break;
-                case 3:     //  NE(3, "不等于查询"),
-                    if (numberTypeList.contains(fieldType)) {
-                        fieldP = cb.notEqual(root.get(key), convertType4PropertyValue(fieldType, startVal));
-                    } else if (fieldType.equalsIgnoreCase("Date")) {
-                        fieldP = cb.notEqual(root.<Date>get(key), DateTimeUtil.getDateFromString(startVal));
-                    } else {
-                        fieldP = cb.notEqual(root.get(key), startVal);
-                    }
-                    break;
-                case 4:     //  LT(4, "小于查询"),
-                    if (numberTypeList.contains(fieldType)) {
-                        // fieldP = cb.lessThan(root.get(key), convertType4PropertyValue(fieldType, startVal));
-                        fieldP = cb.lt(root.get(key), convertType4PropertyValue(fieldType, startVal));
-                    } else if (fieldType.equalsIgnoreCase("Date")) {
-                        fieldP = cb.lessThan(root.<Date>get(key), DateTimeUtil.getDateFromString(startVal));
-                    } else {
-                        fieldP = cb.lessThan(root.get(key).as(String.class), startVal);
-                    }
-                    break;
-                case 5:     //  LE(5, "小于等于查询"),
-                    if (numberTypeList.contains(fieldType)) {
-                        // fieldP = cb.lessThanOrEqualTo(root.get(key), convertType4PropertyValue(fieldType, startVal));
-                        fieldP = cb.le(root.get(key), convertType4PropertyValue(fieldType, startVal));
-                    } else if (fieldType.equalsIgnoreCase("Date")) {
-                        fieldP = cb.lessThanOrEqualTo(root.<Date>get(key), DateTimeUtil.getDateFromString(startVal));
-                    } else {
-                        fieldP = cb.lessThanOrEqualTo(root.get(key).as(String.class), startVal);
-                    }
-                    break;
-                case 6:     //  GT(6, "大于查询"),
-                    if (numberTypeList.contains(fieldType)) {
-                        // fieldP = cb.greaterThan(root.get(key), convertType4PropertyValue(fieldType, startVal));
-                        fieldP = cb.gt(root.get(key), convertType4PropertyValue(fieldType, startVal));
-                    } else if (fieldType.equalsIgnoreCase("Date")) {
-                        fieldP = cb.greaterThan(root.<Date>get(key), DateTimeUtil.getDateFromString(startVal));
-                    } else {
-                        fieldP = cb.greaterThan(root.get(key).as(String.class), startVal);
-                    }
-                    break;
-                case 7:     //  GE(7, "大于等于查询");
-                    if (numberTypeList.contains(fieldType)) {
-                        // fieldP = cb.greaterThanOrEqualTo(root.get(key), convertType4PropertyValue(fieldType, startVal));
-                        fieldP = cb.ge(root.get(key), convertType4PropertyValue(fieldType, startVal));
-                    } else if (fieldType.equalsIgnoreCase("Date")) {
-                        fieldP = cb.greaterThanOrEqualTo(root.<Date>get(key), DateTimeUtil.getDateFromString(startVal));
-                    } else {
-                        fieldP = cb.greaterThanOrEqualTo(root.get(key).as(String.class), startVal);
-                    }
-                    break;
-                case 8:     // IS_NULL(8, "Null值查询"),
-                    fieldP = cb.isNull(root.get(key));
-                    break;
-                case 9:     // NOT_NULL(9, "非Null值查询")
-                    fieldP = cb.isNotNull(root.get(key));
-                    break;
-                case 10:     // LEFT_LIKE(10, "左模糊查询"),
-                    fieldP = cb.like(root.get(key).as(String.class), "%" + startVal);
-                    break;
-                case 11:     // RIGHT_LIKE(11, "右模糊查询")
-                    fieldP = cb.like(root.get(key).as(String.class), startVal + "%");
-                    break;
-                case 12:     // IN(12, "包含查询"),   // 3.4+
-                    // 切分属性值为集合
-                    String[] values = startVal.split(",|;|、|，|；"); // 支持的分隔符：中英文的逗号分号，和中文的顿号！
-                    List<String> valueList = Arrays.asList(values);
-                    // 日期类型特殊处理
-                    if (fieldType.equalsIgnoreCase("Date")) {
-                        List<Date> valueDateList = new ArrayList<>();
-                        valueList.forEach(v -> {
-                            valueDateList.add(DateTimeUtil.getDateFromString(v));
-                        });
-                        Expression<Date> exp = root.<Date>get(key);
-                        fieldP = exp.in(valueDateList);
-                    } else {
-                        Expression exp = root.get(key);
-                        fieldP = exp.in(valueList);
-                    }
-                    break;
-                default:
-                    // 0 或其他情况,则为模糊查询,FUZZY(0, "模糊查询"),
-                    fieldP = cb.like(root.get(key).as(String.class), "%" + startVal + "%");
-            }
-
-            if (i == 0) { // 第一个直接赋值
-                finalPredicat = fieldP;
-            } else {
-                // 获取当前条件的逻辑类型,即和上一个条件之间的关系，是或还是与
-                Integer logicalType = field.getLogicalType();
-                if (logicalType == ConditionRelationEnum.AND.getValue()) {
-                    finalPredicat = cb.and(finalPredicat, fieldP);
-                } else { // 其他为 logicalType == ConditionRelationEnum.OR.getValue()
-                    finalPredicat = cb.or(finalPredicat, fieldP);
-                }
-            }
-        }
-
-        return finalPredicat;
-    }
+/**
+ * 处理单个组内的条件生成
+ */
+ private Predicate genPredicate4SingleGroup(List<BaseSearchField> fields, Root<T> root, CriteriaBuilder cb, T entity) {
+         Predicate finalPredicat = null;
+         int count = fields.size();
+         Predicate fieldP = null;
+         for (int i = 0; i < count; i++) {
+             BaseSearchField field = fields.get(i);
+             // 得到条件的搜索类型，若为空默认模糊搜索
+             int searchType = field.getSearchType() == null ? 0 : field.getSearchType();
+             String key = field.getName();
+             String startVal = field.getVal();      // 开始值
+             String endVal = field.getVal2();    // 结束值
+             // 处理查询值的类型转换
+             String fieldType = getPropType(key, entity); //直接通过当前实体或者父类来获取属性的类型
+             switch (searchType) {                   // cb支持更多的方法,此处仅使用常用的!
+                 case 1:     //  EQ(1, "等于查询"),
+                     if (numberTypeList.contains(fieldType)) {
+                         fieldP = cb.equal(root.get(key), convertType4PropertyValue(fieldType, startVal));
+                     } else if (dateTypeList.contains(fieldType)) {
+                         if (fieldType.equalsIgnoreCase("Date")) {
+                             fieldP = cb.equal(root.<Date>get(key), DateTimeUtil.getDateFromString(startVal));
+                         } else if (fieldType.equalsIgnoreCase("LocalDateTime")) {
+                             fieldP = cb.equal(root.<LocalDateTime>get(key), DateTimeUtil.getLocalDateTimeFromString(startVal));
+                         } else if (fieldType.equalsIgnoreCase("LocalDate")) {
+                             fieldP = cb.equal(root.<LocalDate>get(key), DateTimeUtil.getLocalDateFromString(startVal));
+                         } else if (fieldType.equalsIgnoreCase("LocalTime")) {
+                             fieldP = cb.equal(root.<LocalTime>get(key), DateTimeUtil.getLocalTimeFromString(startVal));
+                         }
+                     } else {
+                         fieldP = cb.equal(root.get(key).as(String.class), startVal);
+                     }
+                     break;
+                 case 2:     //  RANGE(2, "范围查询"),  如果结束值大于开始值，则交换位置避免查不到数据
+                     if (numberTypeList.contains(fieldType)) {
+                         fieldP = getPredicate4NumberBetweenConditiong(root, cb, key, fieldType, startVal, endVal);
+                     } else if (dateTypeList.contains(fieldType)) {
+                         if (fieldType.equalsIgnoreCase("Date")) {
+                             Date start = DateTimeUtil.getDateFromString(startVal);
+                             Date end = DateTimeUtil.getDateFromString(endVal);
+                             fieldP = end.compareTo(start) > 0 ? cb.between(root.<Date>get(key), start, end) : cb.between(root.<Date>get(key), end, start);
+                         } else if (fieldType.equalsIgnoreCase("LocalDateTime")) {
+                             LocalDateTime start = DateTimeUtil.getLocalDateTimeFromString(startVal);
+                             LocalDateTime end = DateTimeUtil.getLocalDateTimeFromString(endVal);
+                             fieldP = end.compareTo(start) > 0 ? cb.between(root.<LocalDateTime>get(key), start, end) : cb.between(root.<LocalDateTime>get(key), end, start);
+                         } else if (fieldType.equalsIgnoreCase("LocalDate")) {
+                             LocalDate start = DateTimeUtil.getLocalDateFromString(startVal);
+                             LocalDate end = DateTimeUtil.getLocalDateFromString(endVal);
+                             fieldP = end.compareTo(start) > 0 ? cb.between(root.<LocalDate>get(key), start, end) : cb.between(root.<LocalDate>get(key), end, start);
+                         } else if (fieldType.equalsIgnoreCase("LocalTime")) {
+                             LocalTime start = DateTimeUtil.getLocalTimeFromString(startVal);
+                             LocalTime end = DateTimeUtil.getLocalTimeFromString(endVal);
+                             fieldP = end.compareTo(start) > 0 ? cb.between(root.<LocalTime>get(key), start, end) : cb.between(root.<LocalTime>get(key), end, start);
+                         }
+                     } else {
+                         fieldP = cb.between(root.get(key).as(String.class), startVal, endVal);
+                     }
+                     break;
+                 case 3:     //  NE(3, "不等于查询"),
+                     if (numberTypeList.contains(fieldType)) {
+                         fieldP = cb.notEqual(root.get(key), convertType4PropertyValue(fieldType, startVal));
+                     } else if (dateTypeList.contains(fieldType)) {
+                         if (fieldType.equalsIgnoreCase("Date")) {
+                             Date start = DateTimeUtil.getDateFromString(startVal);
+                             fieldP = cb.notEqual(root.<Date>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalDateTime")) {
+                             LocalDateTime start = DateTimeUtil.getLocalDateTimeFromString(startVal);
+                             fieldP = cb.notEqual(root.<LocalDateTime>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalDate")) {
+                             LocalDate start = DateTimeUtil.getLocalDateFromString(startVal);
+                             fieldP = cb.notEqual(root.<LocalDate>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalTime")) {
+                             LocalTime start = DateTimeUtil.getLocalTimeFromString(startVal);
+                             fieldP = cb.notEqual(root.<LocalTime>get(key), start);
+                         }
+                     } else {
+                         fieldP = cb.notEqual(root.get(key), startVal);
+                     }
+                     break;
+                 case 4:     //  LT(4, "小于查询"),
+                     if (numberTypeList.contains(fieldType)) {
+                         // fieldP = cb.lessThan(root.get(key), convertType4PropertyValue(fieldType, startVal));
+                         fieldP = cb.lt(root.get(key), convertType4PropertyValue(fieldType, startVal));
+                     } else if (dateTypeList.contains(fieldType)) {
+                         if (fieldType.equalsIgnoreCase("Date")) {
+                             Date start = DateTimeUtil.getDateFromString(startVal);
+                             fieldP = cb.lessThan(root.<Date>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalDateTime")) {
+                             LocalDateTime start = DateTimeUtil.getLocalDateTimeFromString(startVal);
+                             fieldP = cb.lessThan(root.<LocalDateTime>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalDate")) {
+                             LocalDate start = DateTimeUtil.getLocalDateFromString(startVal);
+                             fieldP = cb.lessThan(root.<LocalDate>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalTime")) {
+                             LocalTime start = DateTimeUtil.getLocalTimeFromString(startVal);
+                             fieldP = cb.lessThan(root.<LocalTime>get(key), start);
+                         }
+                     } else {
+                         fieldP = cb.lessThan(root.get(key).as(String.class), startVal);
+                     }
+                     break;
+                 case 5:     //  LE(5, "小于等于查询"),
+                     if (numberTypeList.contains(fieldType)) {
+                         // fieldP = cb.lessThanOrEqualTo(root.get(key), convertType4PropertyValue(fieldType, startVal));
+                         fieldP = cb.le(root.get(key), convertType4PropertyValue(fieldType, startVal));
+                     } else if (dateTypeList.contains(fieldType)) {
+                         if (fieldType.equalsIgnoreCase("Date")) {
+                             Date start = DateTimeUtil.getDateFromString(startVal);
+                             fieldP = cb.lessThanOrEqualTo(root.<Date>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalDateTime")) {
+                             LocalDateTime start = DateTimeUtil.getLocalDateTimeFromString(startVal);
+                             fieldP = cb.lessThanOrEqualTo(root.<LocalDateTime>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalDate")) {
+                             LocalDate start = DateTimeUtil.getLocalDateFromString(startVal);
+                             fieldP = cb.lessThanOrEqualTo(root.<LocalDate>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalTime")) {
+                             LocalTime start = DateTimeUtil.getLocalTimeFromString(startVal);
+                             fieldP = cb.lessThanOrEqualTo(root.<LocalTime>get(key), start);
+                         }
+                     } else {
+                         fieldP = cb.lessThanOrEqualTo(root.get(key).as(String.class), startVal);
+                     }
+                     break;
+                 case 6:     //  GT(6, "大于查询"),
+                     if (numberTypeList.contains(fieldType)) {
+                         // fieldP = cb.greaterThan(root.get(key), convertType4PropertyValue(fieldType, startVal));
+                         fieldP = cb.gt(root.get(key), convertType4PropertyValue(fieldType, startVal));
+                     } else if (dateTypeList.contains(fieldType)) {
+                         if (fieldType.equalsIgnoreCase("Date")) {
+                             Date start = DateTimeUtil.getDateFromString(startVal);
+                             fieldP = cb.greaterThan(root.<Date>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalDateTime")) {
+                             LocalDateTime start = DateTimeUtil.getLocalDateTimeFromString(startVal);
+                             fieldP = cb.greaterThan(root.<LocalDateTime>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalDate")) {
+                             LocalDate start = DateTimeUtil.getLocalDateFromString(startVal);
+                             fieldP = cb.greaterThan(root.<LocalDate>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalTime")) {
+                             LocalTime start = DateTimeUtil.getLocalTimeFromString(startVal);
+                             fieldP = cb.greaterThan(root.<LocalTime>get(key), start);
+                         }
+                     } else {
+                         fieldP = cb.greaterThan(root.get(key).as(String.class), startVal);
+                     }
+                     break;
+                 case 7:     //  GE(7, "大于等于查询");
+                     if (numberTypeList.contains(fieldType)) {
+                         // fieldP = cb.greaterThanOrEqualTo(root.get(key), convertType4PropertyValue(fieldType, startVal));
+                         fieldP = cb.ge(root.get(key), convertType4PropertyValue(fieldType, startVal));
+                     } else if (dateTypeList.contains(fieldType)) {
+                         if (fieldType.equalsIgnoreCase("Date")) {
+                             Date start = DateTimeUtil.getDateFromString(startVal);
+                             fieldP = cb.greaterThanOrEqualTo(root.<Date>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalDateTime")) {
+                             LocalDateTime start = DateTimeUtil.getLocalDateTimeFromString(startVal);
+                             fieldP = cb.greaterThanOrEqualTo(root.<LocalDateTime>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalDate")) {
+                             LocalDate start = DateTimeUtil.getLocalDateFromString(startVal);
+                             fieldP = cb.greaterThanOrEqualTo(root.<LocalDate>get(key), start);
+                         } else if (fieldType.equalsIgnoreCase("LocalTime")) {
+                             LocalTime start = DateTimeUtil.getLocalTimeFromString(startVal);
+                             fieldP = cb.greaterThanOrEqualTo(root.<LocalTime>get(key), start);
+                         }
+                     } else {
+                         fieldP = cb.greaterThanOrEqualTo(root.get(key).as(String.class), startVal);
+                     }
+                     break;
+                 case 8:     // IS_NULL(8, "Null值查询"),
+                     fieldP = cb.isNull(root.get(key));
+                     break;
+                 case 9:     // NOT_NULL(9, "非Null值查询")
+                     fieldP = cb.isNotNull(root.get(key));
+                     break;
+                 case 10:     // LEFT_LIKE(10, "左模糊查询"),
+                     fieldP = cb.like(root.get(key).as(String.class), "%" + startVal);
+                     break;
+                 case 11:     // RIGHT_LIKE(11, "右模糊查询")
+                     fieldP = cb.like(root.get(key).as(String.class), startVal + "%");
+                     break;
+                 case 12:     // IN(12, "包含查询"),   // 3.4+
+                     // 切分属性值为集合
+                     String[] values = startVal.split(",|;|、|，|；"); // 支持的分隔符：中英文的逗号分号，和中文的顿号！
+                     List<String> valueList = Arrays.asList(values);
+                     // 日期类型特殊处理
+                     if (dateTypeList.contains(fieldType)) {
+                         if (fieldType.equalsIgnoreCase("Date")) {
+                             List<Date> valueDateList = new ArrayList<>();
+                             valueList.forEach(v -> {
+                                 valueDateList.add(DateTimeUtil.getDateFromString(v));
+                             });
+                             Expression<Date> exp = root.<Date>get(key);
+                             fieldP = exp.in(valueDateList);
+                         } else if (fieldType.equalsIgnoreCase("LocalDateTime")) {
+                             List<LocalDateTime> valueDateList = new ArrayList<>();
+                             valueList.forEach(v -> {
+                                 valueDateList.add(DateTimeUtil.getLocalDateTimeFromString(v));
+                             });
+                             Expression<LocalDateTime> exp = root.<LocalDateTime>get(key);
+                             fieldP = exp.in(valueDateList);
+                         } else if (fieldType.equalsIgnoreCase("LocalDate")) {
+                             List<LocalDate> valueDateList = new ArrayList<>();
+                             valueList.forEach(v -> {
+                                 valueDateList.add(DateTimeUtil.getLocalDateFromString(v));
+                             });
+                             Expression<LocalDate> exp = root.<LocalDate>get(key);
+                             fieldP = exp.in(valueDateList);
+                         } else if (fieldType.equalsIgnoreCase("LocalTime")) {
+                             List<LocalTime> valueDateList = new ArrayList<>();
+                             valueList.forEach(v -> {
+                                 valueDateList.add(DateTimeUtil.getLocalTimeFromString(v));
+                             });
+                             Expression<LocalTime> exp = root.<LocalTime>get(key);
+                             fieldP = exp.in(valueDateList);
+                         }
+                     } else {
+                         Expression exp = root.get(key);
+                         fieldP = exp.in(valueList);
+                     }
+                     break;
+                 default:
+                     // 0 或其他情况,则为模糊查询,FUZZY(0, "模糊查询"),
+                     fieldP = cb.like(root.get(key).as(String.class), "%" + startVal + "%");
+             }
+ 
+             if (i == 0) { // 第一个直接赋值
+                 finalPredicat = fieldP;
+             } else {
+                 // 获取当前条件的逻辑类型,即和上一个条件之间的关系，是或还是与
+                 Integer logicalType = field.getLogicalType();
+                 if (logicalType == ConditionRelationEnum.AND.getValue()) {
+                     finalPredicat = cb.and(finalPredicat, fieldP);
+                 } else { // 其他为 logicalType == ConditionRelationEnum.OR.getValue()
+                     finalPredicat = cb.or(finalPredicat, fieldP);
+                 }
+             }
+         }
+ 
+         return finalPredicat;
+     }
 ```
    说明：仔细阅读代码你会发现，之所以代码看起来多，主要是因为对13中查询方式分别进行处理的，而每种查询方式还涉及到不同的数据类型的处理。
 > 从上面的源代码中相信你，不难发现支持的数据类型是：
 > String、Date、数字型及浮点型。布尔型暂时没有明确支持。
 
-#### 那么对于数值型类型到底支持哪些呢？
+#### 那么对于数值型类型和日期到底支持哪些呢？
 ```java
+    // 常见的数字类型
+    private static List<String> numberTypeList;
+    // 常见日期时间类型
+    private static List<String> dateTypeList;
     static { // 静态初始化以便提高性能
         numberTypeList = new ArrayList<>();  //保存常见的数字类型，以便避免逐个枚举类型处理
         numberTypeList.add("byte");
@@ -642,6 +749,13 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
         // numberTypeList.add("DoubleAdder");
         // numberTypeList.add("LongAccumulator");
         // numberTypeList.add("LongAdder");
+
+        // 保存常见的日期时间类型
+        dateTypeList = new ArrayList<>();
+        dateTypeList.add("Date");
+        dateTypeList.add("LocalDateTime");
+        dateTypeList.add("LocalTime");
+        dateTypeList.add("LocalDate");
     }
       // 将查询条件的值转换为对应类型的值
     private Number convertType4PropertyValue(String type, String value) {
