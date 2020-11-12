@@ -86,7 +86,8 @@ module.exports = {
                         '/guide/cjwt',
                         '/guide/rjrz',
                         '/guide/gxdm',
-                        '/guide/bqsm'
+                        '/guide/bqsm',
+                        '/guide/bdict'
                     ]
                 }
             ],
