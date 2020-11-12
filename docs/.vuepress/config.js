@@ -73,6 +73,8 @@ module.exports = {
                         '/guide/hdsc',
                         '/guide/qdsc',
                         '/guide/xmbs',
+                        '/guide/bdict',
+                        '/guide/fakeDelete',
                         '/guide/userAudit',
                         '/guide/dzh',
                         '/guide/dzhfx'
@@ -86,8 +88,7 @@ module.exports = {
                         '/guide/cjwt',
                         '/guide/rjrz',
                         '/guide/gxdm',
-                        '/guide/bqsm',
-                        '/guide/bdict'
+                        '/guide/bqsm'
                     ]
                 }
             ],
