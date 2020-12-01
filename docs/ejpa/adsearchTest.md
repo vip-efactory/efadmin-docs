@@ -455,3 +455,33 @@ public enum SearchTypeEnum {
     ```
     
     其他说明： 理论上可以支持多分组，但是两个分组已经可以满足大多数的场景，若后面有需要，可以增加组顺序groupOrder属性来加强！
+
+# 前端使用实例
+ 可以参见系统中已有的一些模块,例如操作日志模块
+ src/views/monitor/log/index.vue中67行定义了高级搜索支持的字段:
+```js
+const adSearchFields = [{ fieldName: 'username', labelName: i18n.t('log.username'), type: 'text' },
+ { fieldName: 'requestIp', labelName: i18n.t('log.requestIp'), type: 'text' },
+ { fieldName: 'address', labelName: i18n.t('log.address'), type: 'text' },
+ { fieldName: 'description', labelName: i18n.t('log.description'), type: 'text' },
+ { fieldName: 'browser', labelName: i18n.t('log.browser'), type: 'text' },
+ { fieldName: 'time', labelName: i18n.t('log.time'), type: 'number' },
+ { fieldName: 'createTime', labelName: i18n.t('be.createTime'), type: 'date' }] // 需要高级搜索的字段
+```
+## 使用说明
+adSearchFields 常量就是一个包含对象的数组,数组中对象的属性有:
+```
+fieldName: 字段名, 用户选择时看不见,仅在条件区可见,必须有 
+labelName: 显示名, 选择时可以看到的名称,必须有
+type: 当前字段类型,根据不同的类型使用不同的输入组件,以提高用户体验,支持text,number,date,dict. 可选,默认为text
+dicts: 字典明细,可选,仅当type为dict时,这个属性则必须有;
+```
+dicts的结构说明:案例参见src/views/system/user/index.vue  
+dicts: [{ label: '启用(Active)', value: 1 }, { label: '停用(Disable)', value: 0 }]
+```
+label: 下拉选择时看到的名字
+value: 名字对应的值
+```
+
+## 其他说明
+目前字典dicts是通过上面写入实现的,这种优点是灵活,就算不是字典也可以用这种方式传入,缺点时系统的字典无法直接传入使用,如果您有更好的想法欢迎加群告知.
