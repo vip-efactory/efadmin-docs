@@ -473,7 +473,7 @@ adSearchFields 常量就是一个包含对象的数组,数组中对象的属性�
 ```
 fieldName: 字段名, 用户选择时看不见,仅在条件区可见,必须有 
 labelName: 显示名, 选择时可以看到的名称,必须有
-type: 当前字段类型,根据不同的类型使用不同的输入组件,以提高用户体验,支持text,number,date,dict. 可选,默认为text
+type: 当前字段类型,根据不同的类型使用不同的输入组件,以提高用户体验,支持text,number,date,datetime,dict. 可选,默认为text
 dicts: 字典明细,可选,仅当type为dict时,这个属性则必须有;
 ```
 dicts的结构说明:案例参见src/views/system/user/index.vue  
