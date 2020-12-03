@@ -187,7 +187,7 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
     @GetMapping("/fuzzy")
     @PreAuthorize("@p.check('employee:list')")
     public R getByPage(@RequestParam String q, @RequestParam String fields, @PageableDefault(value = 25, sort = {"id"}, direction = Sort.Direction.DESC) Pageable page) {
-        return super.queryMutiField(q, fields, page);
+        return super.queryMultiField(q, fields, page);
     }
 
 
@@ -283,7 +283,7 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
         }
         Optional entity = entityService.findById(id);
         if (entity.isPresent()) {
-            return R.ok().setData(entity);
+            return R.ok().setData(entity.get());
         } else {
             return R.error(CommDBEnum.SELECT_NON_EXISTENT);
         }
