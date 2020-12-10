@@ -332,8 +332,8 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
             return R.error(CommDBEnum.UPDATE_NON_EXISTENT);
         } else {
             // 检查更新时间戳，避免用旧的数据更新数据库里的新数据
-            Date updateTime = entity.getUpdateTime();
-            Date dbUpdateTime = entityOptional.get().getUpdateTime();
+            LocalDateTime updateTime = entity.getUpdateTime();
+            LocalDateTime dbUpdateTime = entityOptional.get().getUpdateTime();
             if (updateTime != null && updateTime.compareTo(dbUpdateTime) != 0) {
                 return R.error(CommDBEnum.UPDATE_NEW_BY_OLD_NOT_ALLOWED);
             }
@@ -412,7 +412,7 @@ http://localhost:8080/student/fuzzy?fields=name,version&q=BB
      * @param fields 例如:"name,address,desc",对这三个字段进行模糊匹配
      * @return R
      */
-    public R queryMutiField(String q, String fields) {
+    public R queryMultiField(String q, String fields) {
         // 构造高级查询条件
         T1 be = buildQueryConditions(q, fields);
 
@@ -431,7 +431,7 @@ http://localhost:8080/student/fuzzy?fields=name,version&q=BB
      * @param page   分页参数对象
      * @return R
      */
-    public R queryMutiField(String q, String fields, Pageable page) {
+    public R queryMultiField(String q, String fields, Pageable page) {
         // 构造高级查询条件
         T1 be = buildQueryConditions(q, fields);
         Page<T1> entities = entityService.advancedQuery(be, page);

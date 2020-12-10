@@ -1,7 +1,7 @@
 # 介绍
 <center><h1>EF-ADMIN 后台管理系统</h1></center>
-<center><p>首先声明EF-ADMIN是基于EL-ADMIN项目演化而来的，目前绝大多数特征和EL—ADMIN是一致的</p></center>
-<center><p>EF-ADMIN基于 Spring Boot 2.2.6 、 Spring Boot Jpa| -ejpa、 JWT、Spring Security、Redis、Vue的前后端分离的后台管理系统，同时因为EF-ADMIN使用了ejpa框架，因此具有模板式的CRUD接口以及多条件高级搜索及国际化等功能。</p></center>
+<center><p>EF-ADMIN最初是基于EL-ADMIN项目演化而来的项目，目前绝大多数特征和EL—ADMIN是一致的</p></center>
+<center><p>EF-ADMIN基于 Spring Boot 2.3.1 、 Spring Boot Jpa| -ejpa、 JWT、Spring Security、Redis、Vue的前后端分离的后台管理系统，同时因为EF-ADMIN使用了ejpa框架，因此具有模板式的CRUD接口以及多条件高级搜索及国际化等功能。</p></center>
 <center>
 
 [![star](https://github.com/vip-efactory/efadmin/badge/star.svg?theme=white)](https://github.com/vip-efactory/efadmin)
