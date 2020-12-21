@@ -59,10 +59,10 @@
 # 属性检查的工具类核心实现
 ```
 原理：validateModel方法根据传入的要校验的实体及校验组，找到所有要校验的属性，循环对每一个属性按照注解校验规则进行检查，  
-如果检查通过则放行，否则开始处理收件校验信息：   
+如果检查通过则放行，否则开始处理收集校验信息：   
 1、将注解里的message属性值取出来，例如 message= "{student.name} {property.length.in.between}"；  
 2、将message值里面的大括号里的国际化key替换成对应的文本值；  
-3、因为国家化文本值里面有可能还有占位符，例如：property.length.in.between=属性长度应在{min}-{max}之间  
+3、因为国际化文本值里面有可能还有占位符，例如：property.length.in.between=属性长度应在{min}-{max}之间  
 4、因此需要再次将占位符替换掉,注意此时的占位符其实都是来源于注解指定的自己的属性值，　　
 例如:@Length(min = 4, max = 8, message = "{student.name} {property.length.in.between}", groups = {Update.class, Default.class})　　
 5、将最终的信息放入Map中进行返回。
@@ -174,7 +174,7 @@ public class ValidateModelUtil {
 
 ## 使用实例
 - 实例代码：
-```
+```java
 /**
  * 学生表，用来测试接口是否正常
  * 对于校验注解，没有指定groups属性的，则默认是Default.class组，
@@ -226,7 +226,7 @@ public class Student extends BaseEntity<Long> {
 }
 ```
 - 注解message属性解析
-```
+```java
     /**
      * 爱好,测试不使用国际化文件，直接硬编码返回！不会因为国际化环境变化而变化，非常不建议这样写！
      */
