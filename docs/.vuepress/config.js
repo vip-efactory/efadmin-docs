@@ -73,6 +73,7 @@ module.exports = {
                         '/guide/hdsc',
                         '/guide/qdsc',
                         '/guide/xmbs',
+                        '/guide/newMenu',
                         '/guide/bdict',
                         '/guide/fakeDelete',
                         '/guide/userAudit',

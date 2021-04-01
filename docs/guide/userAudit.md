@@ -128,7 +128,7 @@ import java.util.Optional;
 public class UserIDAuditorBean implements AuditorAware<String> {
     @Override
     public Optional<String> getCurrentAuditor() {
-        // 此处是可以用户名或者工号,默认值为空串
+        // 此处是可以用户名或者工号,默认值为System
         String username = "System";
         try {
             username = SecurityUtils.getUsername();

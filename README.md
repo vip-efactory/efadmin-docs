@@ -9,9 +9,11 @@ yarn install
 
 # 启动服务
 yarn docs:dev
+或者  npm run docs:dev
 
 # 构建生产
 yarn docs:build
+或者 npm run docs:build
 ```
 
 ## License
