@@ -23,13 +23,13 @@ Entity属性校验功能；
 
 ### 在线体验-管理多租户
 可以管理其他租户的数据源
-<https://efadmin.ddbin.com/>  
+<https://efadmin.ddbin.com:1443/>  
 用户名密码：root/123456
 ### 租户1
-<https://t1.ddbin.com/>  
+<https://t1.ddbin.com:1443/>  
 用户名密码：admin1/123456
 ### 租户2
-<https://t2.ddbin.com/>  
+<https://t2.ddbin.com:1443/>  
 用户名密码：admin2/123456
 ### 注意:
 - A.两个租户的https证书使用的是efadmin.ddbin.com域名的，所以访问时，谷歌浏览器会说证书无效，信任即可!
