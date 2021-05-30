@@ -4,7 +4,7 @@
 - 因为高级查询需要携带很多的参数，故所有的请求都是POST方法！
 
 # 单个条件高级搜索：
-- 支持13种常见的操作，具体参见：vip.efactory.ejpa.base.enums.SearchTypeEnum
+- 支持16种常见的操作，具体参见：vip.efactory.ejpa.base.enums.SearchTypeEnum
 ```
 @Getter
 public enum SearchTypeEnum {
@@ -21,6 +21,10 @@ public enum SearchTypeEnum {
     LEFT_LIKE(10, "左模糊查询"),    // 3.0+
     RIGHT_LIKE(11, "右模糊查询"),   // 3.0+
     IN(12, "包含查询"),             // 3.4+ ,内置暂不支持not in查询！除非手写hql或sql实现
+    // mbp支持,jpa内置暂不支持not in查询！除非手写hql或sql实现，若ejpa发现13的条件直接丢弃
+    NOT_IN(13, "不包含查询"),        
+    IS_EMPTY_STRING(14, "是空串"),
+    NOT_EMPTY_STRING(15, "非空串"),
     ;
     ...
 }
@@ -101,7 +105,9 @@ public enum SearchTypeEnum {
 ```
 以下为测试图片：
 ![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/1-ISNULL-Query.png)
-![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/1-NOTNULL-Query.png)
+![image](https://gitee.com/vip-efactory/ejpa-example/raw/master/src/main/resources/static/usage/advQuery/%E5%8D%95%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2/1-NOTNULL-Query.png)  
+同理：  
+IS_EMPTY_STRING(14, "是空串")和NOT_EMPTY_STRING(15, "非空串")查询也不需要传值，searchType为14或者15即可！
 
 ## 2.模糊查询，左模糊，右模糊
 ```

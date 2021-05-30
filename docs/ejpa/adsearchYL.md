@@ -153,7 +153,11 @@ public enum SearchTypeEnum {
     NOT_NULL(9, "非Null值查询"),    // 3.0+
     LEFT_LIKE(10, "左模糊查询"),    // 3.0+
     RIGHT_LIKE(11, "右模糊查询"),   // 3.0+
-    IN(12, "包含查询"),             // 3.4+ ,内置暂不支持not in查询！除非手写hql或sql实现
+    IN(12, "包含查询"),             // 3.4+
+    // mbp支持,jpa内置暂不支持not in查询！除非手写hql或sql实现，
+    NOT_IN(13, "不包含查询"),
+    IS_EMPTY_STRING(14, "是空串"),
+    NOT_EMPTY_STRING(15, "非空串"),
     ;
 
     // 枚举值
@@ -696,6 +700,14 @@ public class EmployeeController extends BaseController<Employee, EmployeeService
                          fieldP = exp.in(valueList);
                      }
                      break;
+                case 13:     // NOT_IN(13, "不包含查询"),   // 不支持，啥也不做,embp支持
+                    break;
+                case 14:     // IS_EMPTY_STRING(14, "空串查询"),
+                    fieldP = cb.equal(root.get(key), "");
+                    break;
+                case 15:     // NOT_EMPTY_STRING(15, "非空串查询")
+                    fieldP = cb.notEqual(root.get(key), "");
+                    break;
                  default:
                      // 0 或其他情况,则为模糊查询,FUZZY(0, "模糊查询"),
                      fieldP = cb.like(root.get(key).as(String.class), "%" + startVal + "%");
