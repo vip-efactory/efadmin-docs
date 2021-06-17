@@ -342,3 +342,14 @@ PS:
         return "redirect: /user/index";
     }
 ```
+《Spring实战第5版》中P46提到的@Valid注解使用方式：  
+```java
+@PostMapping
+public String processOrder (@Valid Order order, Errors errors) { 
+    if (errors.hasErrors()) { 
+        return "orderForm"; 
+    }
+    log.info("Order submitted:" + order); 
+    return "redirect:/" ;
+}
+```
