@@ -44,7 +44,22 @@ module.exports = {
             { text: 'EMBP', link: '/embp/'},
             { text: '捐赠', link: '/donation/'},
             { text: 'v2.x', link: '/version/V2.x/'},
-            { text: '体验', link: 'http://efadmin.ddbin.com'},
+            { text: '体验',
+                items: [
+                    {
+                        text: '管理租户',
+                        link: 'https://efadmin.ddbin.com:1443'
+                    },
+                    {
+                        text: '租户1',
+                        link: 'https://t1.ddbin.com:1443'
+                    },
+                    {
+                        text: '租户2',
+                        link: 'https://t2.ddbin.com:1443'
+                    }
+                ]
+            },
             // { text: '博客', link: 'https://www.ydyno.com/'},
             // 下拉列表
             {
