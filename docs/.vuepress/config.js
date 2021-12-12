@@ -121,6 +121,7 @@ module.exports = {
                         '/ejpa/adsearchTest',
                         '/ejpa/adsearchYL',
                         '/ejpa/cacheCoherency',
+                        '/ejpa/queryDSL',
                     ]
                 },
                 {
