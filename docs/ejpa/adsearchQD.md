@@ -5,9 +5,9 @@
 ```
 # 以操作日志搜索进行说明
 ## 打开操作日志的列表界面
-![高级搜索按钮](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/adSearhBtn.png)
+![高级搜索按钮](/adSearch/adSearhBtn.png)
 ## 点击上图中的高级搜索按钮
-![高级搜索主界面](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/mainUI.png)  
+![高级搜索主界面](/adSearch/mainUI.png)  
     说明：efadmin-ui中引入了模态框移动的功能，因此，可以拖住高级搜索的标题栏可以进行移动。
 
 ### 条件类型说明
@@ -33,19 +33,19 @@ height和weight在第二个括号内，即都属于另外一个组。
 ```
 
 ### 选择查询字段
-![选择要查询的字段](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/selectField.png)  
+![选择要查询的字段](/adSearch/selectField.png)  
 有哪些字段可以进行查询，是通过代码配置的，后面会讲到。  
 目前支持的后端数据类型有：String、Date、所有数字型、所有浮点型、数字型表示的布尔型。  
 
 ### 选择字段的查询方式，
-![字段的查询方法](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/queryMethod.png)  
+![字段的查询方法](/adSearch/queryMethod.png)  
 目前总共有13种查询方式，分别是：  
 全模糊，左模糊，右模糊、等于，不等于、区间范围查询、大于，小于，大于等于，小于等于、空值，非空值、包含查询。  
 其中包含查询，例如查询姓名是王伟和李超的记录，值用逗号分隔；
 > 所有包含(∈)查询,都需要手动输入,并且分隔符支持:",|;|、|，|；" 即中英文的逗号分号，和中文的顿号!
 
 ### 输入查询对应的值
-![查询条件的值](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/fieldValue.png)  
+![查询条件的值](/adSearch/fieldValue.png)  
     说明：
  >1. 空值和非空值查询不需要填写**值**字段；范围查询时，需要输入(开始)**值**和**结束值**。
  >2. 条件值的输入请注意输入法的全角与半角的,请使用半角输入,除非数据里有全角的内容；  
@@ -54,7 +54,7 @@ height和weight在第二个括号内，即都属于另外一个组。
  >5. 下拉选择类型的包含查询,需要知道选择项的数据库层面的值,如果不知道,在界面上选择一个值加入条件区就可以看到原始值.
 
 ### 条件区
-![条件区](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/fieldArea.png)  
+![条件区](/adSearch/fieldArea.png)  
 选择好条件后单击【加入条件区】按钮，条件就会进入条件区，在条件区里目前可以删除已有条件，但是不支持直接修改。  
 如果是单条件查询，此处只允许有一个条件！
 
@@ -63,7 +63,7 @@ height和weight在第二个括号内，即都属于另外一个组。
 此高级查询支持分页功能，查询后可以在列表区翻页请求下一页数据。
 
 ### 对于多条件查询时
-![多条件](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/mutiField.png)  
+![多条件](/adSearch/mutiField.png)  
 
 #### 条件顺序  
 单个条件查询时不显示此字段!  
@@ -77,7 +77,7 @@ height和weight在第二个括号内，即都属于另外一个组。
 > <b>因此强烈不建议条件顺序都默认为0,都默认为0,会导致位置优先顺序是不确定的!!!!!</b>
 
 ### 对于分组查询时
-![分组查询](https://gitee.com/vip-efactory/efadmin-ui/raw/master/public/adSearch/groupField.png)  
+![分组查询](/adSearch/groupField.png)  
 #### 所属分组  
 目前仅提供两个(括号)分组,即默认组和其他组,就是当前条件在哪个括号里面的意思.
 
